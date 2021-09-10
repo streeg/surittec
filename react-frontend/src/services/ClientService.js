@@ -7,6 +7,10 @@ class ClientService {
     getClients(){
         return axios.get(ClientsUrl);
     }
+
+    createClient(client){
+        return axios.post(ClientsUrl, client);
+    }
 }
 
 export default new ClientService();
