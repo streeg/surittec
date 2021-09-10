@@ -7,13 +7,14 @@ class ListClientComponent extends Component {
 
 
         this.state = { 
-            clients: [[]]
+            clients: [],
          }
     }
 
     componentDidMount() {
         ClientService.getClients().then((res) => {
-            this.setState({ clients: res.data })
+            this.setState({ clients: res.data})
+            console.log(res.data)
         });
     }
     render() { 
@@ -24,6 +25,7 @@ class ListClientComponent extends Component {
                     <table className="table table-striped table-bordered">
                         <thead>
                             <tr>
+                            
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>CPF</th>
@@ -36,14 +38,35 @@ class ListClientComponent extends Component {
                         </thead>
                         <tbody>
                             {
-                                this.state.clients.map(client => 
+                                this.state.clients.map((client) => 
                                     <tr key={client.id}>
                                         <td>{client.name}</td> 
                                         <td>{client.cpf}</td>
-                                        <td>{client.email}</td>
-                                        <td>{client.address}</td>    
+                                        <td>{client.email}</td> 
+                                        <td>CEP: 
+                                            {client.cep ? " " + client.cep + " ": '-\n'}
+                                            {client.logradouro ? client.logradouro + " " : '-\n'} 
+                                            {client.bairro ? " " + client.bairro + " " : '-\n'} 
+                                            {client.cidade ? " " + client.cidade + "" : '-\n'} 
+                                            {client.uf ? " - " + client.uf + " " : '-\n'}
+                                        </td>
+                                        <td>
+                                        {client.phone.map((phone, index) => 
+                                        <>
+                                            {
+                                                phone.number + " "
+                                            }
+                                        </>
+                                        )}
+                                        </td>
+                                        <td>
+                                            {client.email}
+                                        </td>
+                                        <td>
+                                        </td>
                                     </tr>    
                                 )
+                                
                             }
                             
 
